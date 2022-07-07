@@ -236,3 +236,82 @@ function check(num){
             window.location.href = 'login.html';
 
 }
+
+
+function change(num){
+    let changePwd = document.getElementById("changePwd");
+    let login = document.getElementById("log");
+    if (num === 0){
+        changePwd.style.animation="out 2s";
+        login.style.animation="in 2s";
+        changePwd.style.zIndex="2";
+        login.style.zIndex="-1";
+    }
+    else {
+        login.style.animation="out 1s";
+        changePwd.style.animation="in 1s";
+        login.style.zIndex="2";
+        changePwd.style.zIndex="-1";
+    }
+}
+
+function changePwd(){
+    if (typeof (Storage) !== "undefined") {
+        let oldPwd = document.getElementById("old_pwd").value;
+        let newPwd = document.getElementById("new_pwd").value;
+        let email = document.getElementById("email_check").value;
+        let v_code = document.getElementById("v_code").value;
+        if (window.localStorage.userArr) {//判断是否存在
+            if (emailStandard.test(email)){
+                let index;
+                let array = -1;
+                array = JSON.parse(window.localStorage.userArr);
+                for (let i = 0; i < array.length; i++) {
+                    if (email===array[i].email){
+                        index = i;
+                        break;
+                    }
+                }
+                if (array===-1) {
+                    alert("The mailbox doesn't exist!");
+                    return;
+                }
+                if (array[index].password===oldPwd){
+                    if (pwdStandard.test(newPwd)){
+                        if (v_code==="7364"){
+                            array[index].password = newPwd;
+                            window.localStorage.userArr = JSON.stringify(array);
+                            alert("The password change was successful!");
+                            let changePwd = document.getElementById("changePwd");
+                            let login = document.getElementById("log");
+                            login.style.animation="out 1s";
+                            changePwd.style.animation="in 1s";
+                            login.style.zIndex="2";
+                            changePwd.style.zIndex="-1";
+                        }else {
+                            alert("The verification code is incorrect!");
+                            return;
+                        }
+                    }else {
+                        alert("The new password is malformed!")
+                    }
+                }else {
+                    alert("The old password is incorrect!");
+                    return;
+                }
+
+            }else{
+                alert("The mailbox is malformed!");
+                return;
+            }
+
+
+        }
+        else
+            alert("No account exists!");
+
+    }
+    else {
+        document.getElementById("result").innerHTML = "对不起，您的浏览器不支持 web 存储。";
+    }
+}

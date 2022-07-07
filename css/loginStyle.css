@@ -9,28 +9,28 @@ body {
 }
 /*_____________________________________________________________*/
 .outbox{
-    perspective:300px;		/* 脱离平面屏幕束缚，元素离观察者眼睛的距离, 只能用在3d动画 */
-    -webkit-perspective:300px;
+    perspective:1000px;		/* 脱离平面屏幕束缚，元素离观察者眼睛的距离, 只能用在3d动画 */
+    -webkit-perspective:1000px;
 }
 .inner{
     transform-style: preserve-3d;	/* 动画方式 3d */
     -webkit-transform-style: preserve-3d;
-    transition: 1s ease-in-out;  /* 运动速度，变速运动 */
+    transition: 1.5s ease-in-out;  /* 运动速度，变速运动 */
 
-    position: relative;
-    margin: 100px auto;
-    height: 300px;
-    width: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    height: 400px;
+    width: 600px;
 }
-.inner:hover{
-    -webkit-transform: rotateY(0.5turn);	/*  y轴 旋转180度 半圈 */
-    transform: rotateY(0.5turn);
-}
+/*.inner:hover{*/
+/*    -webkit-transform: rotateY(0.5turn);	!*  y轴 旋转180度 半圈 *!*/
+/*    transform: rotateY(0.5turn);*/
+/*}*/
 .front,.back{
     backface-visibility:hidden; /* 隐藏背部元素 */
     -webkit-backface-visibility:hidden;
-    -moz-backface-visibility:hidden;
-    -ms-backface-visibility:hidden;
 
     top: 0;
     left: 0;
@@ -38,13 +38,11 @@ body {
     height: 100%;
     width: 100%;
 }
-.front{
-    background-color: red;
-}
 .back{
-    transform:rotateY(0.5turn);  /* 旋转到背部 */
-    background-color: aquamarine;
+    transform:rotateY(180deg); /* 旋转到背部 */
+    margin: -30% 50%;
 }
+
 
 /*________________________________________________*/
 .background{
@@ -56,7 +54,7 @@ body {
     min-width: 100%;
     min-height: 100%;
 
-    background-image: linear-gradient(#1FA2FF,#12D8FA,#A6FFCB);
+    background-image: linear-gradient(135deg, rgba(31, 162, 255, 0.8), rgba(18, 216, 250, 0.8),#A5FFD6,#A6FFCB);
     background-repeat: no-repeat;
     /*background-size: cover;*/
     /*-webkit-background-size: cover;!* 兼容Webkit内核浏览器如Chrome和Safari *!*/
@@ -74,23 +72,16 @@ body {
 /*    height: auto;*/
 /*    width: auto;*/
 /*}*/
-.login_and_register_box {
+.all_box {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    /*margin-top: -150px;*/
-    /*margin-left: -30px;*/
-
-    /*margin-left: -33%;*/
-    /*margin-top: -15%;*/
-    /*js动态更改*/
 
     width: 600px;
-
-
     height: 400px;
-    background-image:linear-gradient(#1FA2FF,#12D8FA,#A6FFCB);
+
+    background-image:linear-gradient(-45deg,#1FA2FF,#12D8FA,#A6FFCB);
 
     border-radius: 15px;
     filter: drop-shadow(
@@ -152,7 +143,7 @@ body {
 /*}*/
 .forgotPassword {
     text-decoration: none;
-    color: blue;
+    color: rgba(0, 0, 255, 0.8);
 }
 .login_box input[type=text]{
     margin-bottom: 30px;
@@ -313,5 +304,75 @@ input[type=email] {
     }
     to{
         width: 400px;
+    }
+}
+
+
+.change_pwd input[type = text],.change_pwd input[type=email]{
+    width: 250px;
+    height: 30px;
+    border-radius: 15px;
+    border: white;
+    outline: none;
+
+}
+
+.change_pwd input[type=button]{
+    height: 40px;
+    width: 210px;
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-radius: 15px;
+    border: white;
+    outline: none;
+}
+.change_pwd input[type=button]:hover{
+    font-size: 18px;
+    background-color: darkorange;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+
+}
+.verification_code{
+    width: 250px;
+    margin-top: 5px;
+    margin-left: 210px;
+}
+.verification_code input{
+    margin-left: -90px;
+    height: 30px;
+    margin-top: 10px;
+    outline: none;
+}
+.verification_code img{
+    border-radius: 5px;
+    height: 30px;
+    width: 50px;
+    margin-bottom: -13px ;
+    margin-left: 50px;
+}
+
+.change_pwd{
+    z-index: -1;
+}
+
+@keyframes out {
+    from{
+        z-index: -1;
+
+    }
+    to{
+        z-index: 2;
+
+    }
+}
+@keyframes in {
+    from{
+        z-index: 2;
+        opacity: 1;
+    }
+    to{
+        z-index: -1;
+        opacity: 0;
     }
 }
