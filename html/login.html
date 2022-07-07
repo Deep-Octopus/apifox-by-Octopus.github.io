@@ -15,12 +15,9 @@
 <!--<video id="v1" autoplay loop muted>-->
 <!--    <source src="../video/video_2000308532.mp4" type="video/mp4">-->
 <!--</video>-->
-<!--登录-->
-<div class="outBox" >
-    <div class="inner">
-        <div class="font">
-
-            <div class="login_and_register_box">
+<div id="log">
+            <div class="all_box" >
+                <!--登录-->
                 <div class="login_box" id="login_div">
                     <label><h1>Login</h1></label>
                     <form>
@@ -29,7 +26,9 @@
                     </form>
                     <input type="button" class="btOfLogin" id="login" onclick="login()" value="Login >">
                     <br><br><br>
-                    <a href="#" class="forgotPassword" id="forgot_password">Forgot password</a>
+<!--                    忘记密码-->
+                    <a href="#" class="forgotPassword" id="forgot_password" onclick="change(0)">Change password</a>
+
                 </div>
 
                 <!--注册-->
@@ -50,11 +49,22 @@
             <div class="cover" id="id_cover">
                 <input type="button" class="btOfCover_Register" value="Register" onclick="listening()" id="btOfCover">
             </div>
-        </div>
-        <div class="back_">
-
-        </div>
-    </div>
+</div>
+<!--        _________________________________________-->
+            <div class="all_box change_pwd"  id="changePwd">
+                <div class="change_pwd">
+                    <label><h1>Change Password</h1></label>
+                    <input type="text" placeholder="Old Password" id="old_pwd"><br>
+                    <input type="text" placeholder="New Password" id="new_pwd"><br>
+                    <input type="email" placeholder="Email" id="email_check"><br>
+                    <div class="verification_code">
+                        <input style="width: 120px" type="text" placeholder="Verification code" id="v_code">
+                        <img src="../img/5b46c210c3159.jpg"><br>
+                    </div>
+                    <input type="button" value="Change >" onclick="changePwd()"><br>
+                    <a href="#" class="forgotPassword" id="return" onclick="change(1)">Return</a>
+                </div>
+            </div>
 </div>
 </body>
 </html>
