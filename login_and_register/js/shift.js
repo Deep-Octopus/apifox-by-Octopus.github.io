@@ -39,10 +39,24 @@ function listening() {
     cover.innerHTML;
 }
 
-const emailStandard = /^\d{10}@[a-zA-Z\d]+\.([a-zA-Z]{2,4})$/;
-const userNameStandard = /^[\da-zA-Z]{3,15}/;
+function showInformation(){
+    let index;
+    let array = JSON.parse(window.localStorage.userArr);
+    for (let i = 0; i < array.length; i++) {
+        if (array[i].isOn)
+            index = i;
+    }
+    alert(
+        "Nickname : " + array[index].nickName + "\n" +
+        "User Name : " + array[index].userName + "\n" +
+        "Email : " + array[index].email
+    );
+}
+//
+const emailStandard = /^[\dA-z]{6,10}@[a-zA-Z\d]+\.([a-zA-Z]{2,4})$/;
+const userNameStandard = /^[\da-zA-Z]{3,15}$/;
 const pwdStandard = /^[a-zA-Z\d]{6,20}$/;
-const nickNameStandard = /[\u4e00-\u9fa5a-zA-Z\d]{3,20}/;
+const nickNameStandard = /^[\u4e00-\u9fa5a-zA-Z\d]{3,20}$/;
 
 
 //注册
@@ -72,22 +86,23 @@ function register() {
             };
             array.push(obj);
             window.localStorage.userArr = JSON.stringify(array);
-            alert("注册成功！");
-            // document.getElementById("user_name").innerHTML= "";
-            // document.getElementById("nick_name").innerHTML= "";
-            // document.getElementById("email").innerHTML= "";
-            // document.getElementById("first_pwd").innerHTML= "";
-            // document.getElementById("sec_pwd").innerHTML= "";
+            alert("Registration successful!");
+            document.getElementById('user_name').value = "";
+            document.getElementById('nick_name').value = "";
+            document.getElementById('email').value = "";
+            document.getElementById('first_pwd').value = "";
+            document.getElementById('sec_pwd').value = "";
+
         }
     } else {
-        document.getElementById("result").innerHTML = "对不起，您的浏览器不支持 web 存储。";
+        document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage.";
     }
 }
 
 //检查用户名格式
 function checkUserName(userName, array) {
     if (!userNameStandard.test(userName)) {
-        alert("用户名不符合格式！请重新输入！");
+        alert("Username does not conform to the format! Please re-enter!");
         return false;
     } else {
         //检查用户名
@@ -95,7 +110,7 @@ function checkUserName(userName, array) {
         for (let i = 0; i < array.length; i++) {
             //判断是否有相同用户名
             if (userName == array[i].userName) {
-                alert("该账号已存在");
+                alert("The username already exists");
                 return false;
             }
         }
@@ -106,7 +121,7 @@ function checkUserName(userName, array) {
 function checkNickName(nickName) {
     //检查昵称格式
     if (!nickNameStandard.test(nickName)) {
-        alert("昵称格式不符合格式！请重新输入！");
+        alert("The nickname format does not conform to the format! Please re-enter!");
         return false;
     }
     return true;
@@ -115,7 +130,7 @@ function checkNickName(nickName) {
 function checkEmail(email, array) {
     //检查邮箱格式
     if (!emailStandard.test(email)) {
-        alert("邮箱不符合格式！请重新输入！");
+        alert("Mailbox doesn't match the format! Please re-enter!");
         return false;
     } else {
         //检查邮箱
@@ -123,7 +138,7 @@ function checkEmail(email, array) {
         for (let i = 0; i < array.length; i++) {
             //判断是否有相同邮箱
             if (email == array[i].email) {
-                alert("该邮箱已被注册");
+                alert("The email address is already registered!");
                 return false;
             }
         }
@@ -135,11 +150,11 @@ function checkEmail(email, array) {
 function checkPassword(first_pwd, second_pwd) {
     //检查密码格式
     if (!pwdStandard.test(first_pwd)) {
-        alert("密码不符合格式！请重新输入！");
+        alert("The password does not conform to the format! Please re-enter!");
         return false;
     } else {
         if (first_pwd !== second_pwd) {
-            alert("两次输入的密码不一样！");
+            alert("The password entered twice is not the same!");
             return false;
         }
     }
@@ -170,7 +185,7 @@ function login() {
         }
         if (isExist) {//如果存在
             if (password === array[index].password) {
-                alert("登录成功");
+                alert("Login successful!");
                 //跳转
                 // on_user = userName;
                 setOn(userName,true);
@@ -179,13 +194,13 @@ function login() {
                 },500);
 
             } else {
-                alert("密码错误");
+                alert("Wrong password!");
             }
         } else {//账号不存在或输入错误
-            alert('账号不存在或输入错误');
+            alert('The account number does not exist or is entered incorrectly!');
         }
     }else {
-        document.getElementById("result").innerHTML = "对不起，您的浏览器不支持 web 存储。";
+        document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage.";
     }
 }
 
@@ -201,7 +216,9 @@ function logout(){
     if (confirm("Dear " + array[index].nickName + " , Are you sure to logout?")){
         setOn(array[index].userName,false);
         setTimeout(function (){
+
             window.location.href = 'login.html';
+            window.location.reload();
         },500);
 
     }
@@ -255,6 +272,54 @@ function change(num){
     }
 }
 
+
+//change password
+function checkV_code(array,index,newPwd,v_code){
+    if (v_code==="7364"){
+        array[index].password = newPwd;
+        window.localStorage.userArr = JSON.stringify(array);
+        alert("The password change was successful!");
+        let changePwd = document.getElementById("changePwd");
+        let login = document.getElementById("log");
+        login.style.animation="out 1s";
+        changePwd.style.animation="in 1s";
+        login.style.zIndex="2";
+        changePwd.style.zIndex="-1";
+    }else {
+        alert("The verification code is incorrect!");
+    }
+}
+function checkPwdOfChangePwd(array,index,oldPwd,newPwd,v_code){
+    if (array[index].password===oldPwd){
+        if (pwdStandard.test(newPwd)){
+            checkV_code(array,index,newPwd,v_code);
+        }else {
+            alert("The new password is malformed!")
+        }
+    }else {
+        alert("The old password is incorrect!");
+    }
+}
+function checkEmailOfChangePwd(email,oldPwd,newPwd,v_code){
+    if (emailStandard.test(email)){
+        let index = -1;
+        let array;
+        array = JSON.parse(window.localStorage.userArr);
+        for (let i = 0; i < array.length; i++) {
+            if (email===array[i].email){
+                index = i;
+                break;
+            }
+        }
+        if (index===-1) {
+            alert("The mailbox doesn't exist!");
+            return;
+        }
+        checkPwdOfChangePwd(array,index,oldPwd,newPwd,v_code);
+    }else{
+        alert("The mailbox is malformed!");
+    }
+}
 function changePwd(){
     if (typeof (Storage) !== "undefined") {
         let oldPwd = document.getElementById("old_pwd").value;
@@ -262,54 +327,10 @@ function changePwd(){
         let email = document.getElementById("email_check").value;
         let v_code = document.getElementById("v_code").value;
         if (window.localStorage.userArr) {//判断是否存在
-            if (emailStandard.test(email)){
-                let index;
-                let array = -1;
-                array = JSON.parse(window.localStorage.userArr);
-                for (let i = 0; i < array.length; i++) {
-                    if (email===array[i].email){
-                        index = i;
-                        break;
-                    }
-                }
-                if (array===-1) {
-                    alert("The mailbox doesn't exist!");
-                    return;
-                }
-                if (array[index].password===oldPwd){
-                    if (pwdStandard.test(newPwd)){
-                        if (v_code==="7364"){
-                            array[index].password = newPwd;
-                            window.localStorage.userArr = JSON.stringify(array);
-                            alert("The password change was successful!");
-                            let changePwd = document.getElementById("changePwd");
-                            let login = document.getElementById("log");
-                            login.style.animation="out 1s";
-                            changePwd.style.animation="in 1s";
-                            login.style.zIndex="2";
-                            changePwd.style.zIndex="-1";
-                        }else {
-                            alert("The verification code is incorrect!");
-                            return;
-                        }
-                    }else {
-                        alert("The new password is malformed!")
-                    }
-                }else {
-                    alert("The old password is incorrect!");
-                    return;
-                }
-
-            }else{
-                alert("The mailbox is malformed!");
-                return;
-            }
-
-
+            checkEmailOfChangePwd(email,oldPwd,newPwd,v_code);
         }
         else
             alert("No account exists!");
-
     }
     else {
         document.getElementById("result").innerHTML = "对不起，您的浏览器不支持 web 存储。";

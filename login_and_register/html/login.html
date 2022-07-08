@@ -11,10 +11,7 @@
 <div class="background">
 
 </div>
-<!--背景-->
-<!--<video id="v1" autoplay loop muted>-->
-<!--    <source src="../video/video_2000308532.mp4" type="video/mp4">-->
-<!--</video>-->
+
 <div id="log">
             <div class="all_box" >
                 <!--登录-->
@@ -35,10 +32,10 @@
                 <div class="register_box" id="register_div">
                     <label><h1>Register</h1></label>
                     <form>
-                        <input type="text" placeholder="User Name" class="container" id="user_name"><br>
-                        <input type="text" placeholder="Nickname" class="container" id="nick_name"><br>
+                        <input type="text" placeholder="User Name(NUM,ENG.3-15)" class="container" id="user_name"><br>
+                        <input type="text" placeholder="Nickname(CH,NUM,ENG.3-20)" class="container" id="nick_name"><br>
                         <input type="email" placeholder="Email" class="container" id="email"><br>
-                        <input type="password" placeholder="Password" class="container" id="first_pwd"><br>
+                        <input type="password" placeholder="Password(NUM,ENG.6-20)" class="container" id="first_pwd"><br>
                         <input type="password" placeholder="Enter the password again" class="container" id="sec_pwd"><br>
                     </form>
                     <input type="button" class="btOfLogin" value="Register >" id="bt_register" onclick="register()"><br>
@@ -54,9 +51,9 @@
             <div class="all_box change_pwd"  id="changePwd">
                 <div class="change_pwd">
                     <label><h1>Change Password</h1></label>
+                    <input type="email" placeholder="Email" id="email_check"><br>
                     <input type="text" placeholder="Old Password" id="old_pwd"><br>
                     <input type="text" placeholder="New Password" id="new_pwd"><br>
-                    <input type="email" placeholder="Email" id="email_check"><br>
                     <div class="verification_code">
                         <input style="width: 120px" type="text" placeholder="Verification code" id="v_code">
                         <img src="../img/5b46c210c3159.jpg"><br>
