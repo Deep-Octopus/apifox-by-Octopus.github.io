@@ -3,7 +3,6 @@
 function listening() {
     const login = document.getElementById("login_div");
     const register = document.getElementById("register_div");
-
     const cover = document.getElementById("id_cover");
     // ("#id_cover").add;
     // cover.classList.replace("cover","newCover");
@@ -109,7 +108,7 @@ function checkUserName(userName, array) {
         //遍历数组进行匹配
         for (let i = 0; i < array.length; i++) {
             //判断是否有相同用户名
-            if (userName == array[i].userName) {
+            if (userName === array[i].userName) {
                 alert("The username already exists");
                 return false;
             }
@@ -137,7 +136,7 @@ function checkEmail(email, array) {
         //遍历数组进行匹配
         for (let i = 0; i < array.length; i++) {
             //判断是否有相同邮箱
-            if (email == array[i].email) {
+            if (email === array[i].email) {
                 alert("The email address is already registered!");
                 return false;
             }
